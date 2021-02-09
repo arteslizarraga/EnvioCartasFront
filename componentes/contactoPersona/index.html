@@ -1,0 +1,221 @@
+
+
+<div id="modalSubirExcel" class="modal fade in" data-backdrop="static" data-keyboard="false" tabindex="-1" style="overflow-y: scroll;" role="dialog"> 
+	<div class="modal-dialog modal-lg" style="width: 90%;"> 
+		<div class="modal-content"> 
+			<form enctype="multipart/form-data" onsubmit="subirExcel(event)"> 
+
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> 
+					<h3 class="modal-title"> Subir archivo Excel </h3> 
+				</div> 
+
+				<div class="modal-body"> 
+					<div class="row"> 
+						
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="Archivo"> Archivo </label> 
+								<input type="file" id="archivoExcel" name="archivo" class="form-control" /> 
+							</div> 
+						</div> 		
+
+					</div> <!-- Fin <div class="row"> --> 
+
+				</div> 
+				<div class="modal-footer"> 
+					<button type="submit" class="btn btn-primary"> Guardar Archivo </button> 
+					<button type="button" class="btn btn-default" data-dismiss="modal"> Cancelar </button> 
+				</div> 
+			</form> 
+
+		</div> 
+	</div> 
+</div> 
+
+<div id="modalCrearEditar" class="modal fade in" data-backdrop="static" data-keyboard="false" tabindex="-1" style="overflow-y: scroll;" role="dialog"> 
+	<div class="modal-dialog modal-lg" style="width: 90%;"> 
+		<div class="modal-content"> 
+			<form onsubmit="guardar(event)"> 
+
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> 
+					<h3 class="modal-title"> Crear/Editar </h3> 
+				</div> 
+
+				<div class="modal-body"> 
+					<div class="row"> 
+
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="email"> Email </label> 
+								<input type="text" onkeyup="contactoPersona[this.name] = this.value" name="email" class="contactoPersona form-control" autocomplete="off" /> 
+							</div> 
+						</div> 
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="nombreCompleto"> Nombre completo (Opcional)</label> 
+								<input type="text" onkeyup="contactoPersona[this.name] = this.value" name="nombreCompleto" class="contactoPersona form-control" autocomplete="off" /> 
+							</div> 
+						</div> 
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="haRespondido"> Ha respondido (Opcional) </label> 
+								<select onchange="contactoPersona[this.name] = this.value" name="haRespondido" class="contactoPersona form-control"> 
+									<option value=""> - Seleccione - </option> 
+									<option value="true"> si </option> 
+									<option value="false"> no </option> 
+								</select> 
+							</div> 
+						</div> 
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="ultimaFechaRespuesta"> Última fecha respuesta (Opcional) </label> 
+								<!-- <input type="date" onchange="contactoPersona[this.name] = this.value" name="ultimaFechaRespuesta" class="contactoPersona form-control" />  -->
+								<input type="text" name="ultimaFechaRespuesta" class="contactoPersona form-control" />
+							</div> 
+						</div> 
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="ultimaFechaEnvioCorreo"> Última fecha envio correo (Opcional) </label> 
+								<!-- <input type="date" onchange="contactoPersona[this.name] = this.value" name="ultimaFechaEnvioCorreo" class="contactoPersona form-control" />  -->
+								<input type="text" name="ultimaFechaEnvioCorreo" class="contactoPersona form-control" />
+							</div> 
+						</div> 
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="existe"> Existe </label> 
+								<select onchange="contactoPersona[this.name] = this.value" name="existe" class="contactoPersona form-control"> 
+									<option value=""> - Seleccione - </option> 
+									<option value="true"> si </option> 
+									<option value="false"> no </option> 
+								</select> 
+							</div> 
+						</div> 
+
+					</div> <!-- Fin <div class="row"> --> 
+					
+				</div> 
+				<div class="modal-footer"> 
+					<button type="submit" class="btn btn-primary"> Guardar </button> 
+					<button type="button" class="btn btn-default" data-dismiss="modal"> Cancelar </button> 
+				</div> 
+			</form> 
+
+		</div> 
+	</div> 
+</div> 
+
+<div> 
+
+	<br/> 
+	<button name="crear" onclick="crearNuevo(); $('#modalCrearEditar').modal('show')" class="btn btn-success"> <span>+</span> Agregar Nuevo Contacto de Persona </button>  
+	<button onclick="$('#modalSubirExcel').modal('show')" class="btn btn-primary" style="margin-left: 1%;"> <span>+</span> Agregar con archivo Excel </button> <br/>
+
+	<br/><br/> 
+
+	<h4> Listado de contactos de personas </h4> 
+
+	<!-- Inicio nav paginacion --> 
+	<br/> 
+
+	<div id="nav_paginacion" style="display: none"> 
+		<div class="row"> 
+			<div class="col-md-1"> 
+				<button id="btn_pagina_anterior" onclick="paginaActual = paginaActual - 1; obtenerListaPrincipal()" type="button" class="btn btn-default"> 
+					<span> < </span> Anterior 
+				</button> 
+			</div> 
+			<div class="col-md-1"> 
+				<button id="btn_pagina_siguiente" onclick="paginaActual = paginaActual + 1; obtenerListaPrincipal()" type="button" class="btn btn-default"> 
+					Siguiente <span> > </span> 
+				</button> 
+			</div> 
+		</div> 
+	</div> 
+
+	<br/> 
+	<!-- Fin nav paginacion --> 
+
+	<div class="table-responsive"> <!-- Contenedor para que la tabla sea responsiva --> 
+		<table id="tablaPrincipal" class="table table-bordered"> 
+			<thead> 
+				<tr style="background-color: gray;"> 
+					<th> Id </th> 
+					<th> Email </th>
+					<th> Enviados </th>
+					<th> Última fecha envio correo </th> 
+					<th> Nombre completo </th> 
+					<th> Ha respondido </th> 
+					<th> Última fecha respuesta </th> 
+					<th> Existe </th> 
+					<th> </th> 
+					<th> </th> 
+				</tr> 
+				<tr style="background-color: lightgray;"> 
+					<th> </th> 
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="email"></label> 
+								<input onkeyup="resetearPaginacion(); obtenerListaPrincipal()" type="text" id="emailId" class="form-control" /> 
+							</div> 
+						</div> 
+					</th>
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label"></label> 
+								<select onchange="resetearPaginacion(); obtenerListaPrincipal()" id="haRecibidoId" class="form-control" style="min-width: 67px;"> 
+									<option value=""> -todo- </option> 
+									<option value="true"> si </option> 
+									<option value="false"> no </option> 
+								</select> 
+							</div> 
+						</div> 
+					</th>
+					<th> 
+						<div class="col-md-6"> 
+							<div class="form-group"> 
+								<label class="control-label" for="ultimaFechaEnvioCorreoDesde"> Desde </label> 
+								<input type="text" id="ultimaFechaEnvioCorreoDesdeId" class="form-control" />
+							</div> 
+						</div> 
+						<div class="col-md-6"> 
+							<div class="form-group"> 
+								<label class="control-label" for="ultimaFechaEnvioCorreoHasta"> Hasta </label> 
+								<input type="text" id="ultimaFechaEnvioCorreoHastaId" class="form-control" />
+							</div> 
+						</div>  
+					</th> 
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="nombreCompleto"></label> 
+								<input onkeyup="resetearPaginacion(); obtenerListaPrincipal()" type="text" id="nombreCompletoId" class="form-control" /> 
+							</div> 
+						</div> 
+					</th> 
+					<th> </th> 
+					<th> </th> 
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="existe"></label> 
+								<select onchange="resetearPaginacion(); obtenerListaPrincipal()" id="existeId" class="form-control" style="min-width: 67px;"> 
+									<option value=""> -todo- </option> 
+									<option value="true"> si </option> 
+									<option value="false"> no </option> 
+								</select> 
+							</div> 
+						</div> 
+					</th> 
+					<th> </th> 
+					<th> </th> 
+				</tr> 
+			</thead> 
+			<tbody> 
+			</tbody> 
+		</table> 
+	</div>  <!-- Fin Contenedor para que la tabla sea responsiva --> 
+</div> 

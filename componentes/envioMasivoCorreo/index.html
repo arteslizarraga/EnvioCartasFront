@@ -1,0 +1,239 @@
+
+<div id="modalCrearEditar" class="modal fade in" data-backdrop="static" data-keyboard="false" tabindex="-1" style="overflow-y: scroll;" role="dialog"> 
+	<div class="modal-dialog modal-lg" style="width: 90%;"> 
+		<div class="modal-content"> 
+			<form> 
+
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> 
+					<h3 class="modal-title"> Crear/Editar </h3> 
+				</div> 
+
+				<div class="modal-body"> 
+					<div class="row"> 
+
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="asuntoCorreo"> Asunto correo </label> 
+								<input type="text" onkeyup="envioMasivoCorreo[this.name] = this.value" name="asuntoCorreo" class="envioMasivoCorreo form-control" autocomplete="off" /> 
+							</div> 
+						</div> 
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="emailOrigenEnvio"> Email de envío </label> 
+								<input type="text" name="emailOrigenEnvio" class="envioMasivoCorreo form-control" disabled /> 
+							</div> 
+						</div> 
+						<!-- <div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="usuario"> usuario </label> 
+								<div> 
+									<input type="text" style="display: none; width: 100%;" class="form-control" /> 
+
+									<select onclick="inicializarSelectBuscador(event)" rutaWebApi="/EnvioMasivoCorreo/llenarSelect2" 
+									onchange="envioMasivoCorreo.usuario.id = this.value;	envioMasivoCorreo.usuario.toString = this.options[this.selectedIndex].text" 
+									name="usuario" entidad="Usuario" atributoBuscado="id" class="envioMasivoCorreo form-control"> 
+										<option value=""> - Seleccione - </option> 
+									</select> 
+								</div> 
+							</div> 
+						</div>  -->
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="descripcion"> Descripción </label> 
+								<input type="text" onkeyup="envioMasivoCorreo[this.name] = this.value" name="descripcion" class="envioMasivoCorreo form-control" autocomplete="off" /> 
+							</div> 
+						</div> 
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="estado"> Estado </label> 
+								<input type="text" onkeyup="envioMasivoCorreo[this.name] = this.value" name="estado" class="envioMasivoCorreo form-control" disabled /> 
+							</div> 
+						</div> 
+						<div class="col-md-4"> 
+							<div class="form-group"> 
+								<label class="control-label" for="fechaEnvio"> FechaEnvio </label> 
+								<input type="date" onchange="envioMasivoCorreo[this.name] = this.value" name="fechaEnvio" class="envioMasivoCorreo form-control" disabled /> 
+							</div> 
+						</div> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="contenidoCorreo"> Contenido correo </label> 
+								
+								<!-- <input type="text" onkeyup="envioMasivoCorreo[this.name] = this.value" name="contenidoCorreo" class="envioMasivoCorreo form-control" autocomplete="off" />  -->
+							
+								<textarea id="textarea_contenidoCorreo" name="contenidoCorreo" class="envioMasivoCorreo form-control" 
+								style="min-height: 500px;" autocomplete="off"></textarea>
+							</div> 
+						</div> 
+
+					</div> <!-- Fin <div class="row"> --> 
+
+
+					<!-- Inicio referencias cruzadas de la entidad EnvioMasivoCorreo --> 
+
+					<br/> 
+					<button type="button" onclick="agregarNuevoEnvioCorreoContactoPersona()" class="btn btn-success"> <span>+</span> Agregar nuevo destinatario </button> <br/> 
+
+					<!-- Si el objeto de tipo EnvioMasivoCorreo tiene detalles de tipo EnvioCorreoContactoPersona --> 
+					<div> 
+
+						<br/> 
+						<h4> Listado de destinatarios del correo </h4> 
+
+						<table id="tablaEnvioCorreoContactoPersona" class="table table-bordered"> 
+							<thead> 
+								<tr> 
+									<!-- <th> Estado </th> --> 
+									<th> Email </th> 
+									<!-- <th> Última fecha envío de correo </th> -->
+									<th> </th> 
+								</tr> 
+							</thead> 
+							<tbody> 
+							</tbody> 
+						</table> 
+					</div> 
+					<!-- Fin referencias cruzadas de la entidad EnvioMasivoCorreo --> 
+
+				</div> 
+				<div class="modal-footer"> 
+
+					<button id="botonEnviarPorEmail" 
+					onclick="preguntarEnviarEmail(event)" type="button" class="btn btn-success"> Enviar por email </button>
+					
+					<button id="botonGuardar" onclick="guardar(event)" type="submit" class="btn btn-primary"> Guardar sin enviar </button> 
+					<button type="button" class="btn btn-default" data-dismiss="modal"> Cancelar </button> 
+				</div> 
+			</form> 
+
+		</div> 
+	</div> 
+</div> 
+
+<div> 
+
+	<br/> 
+	<button name="crear" 
+	onclick="crearNuevo(); $('#modalCrearEditar').modal('show');" class="btn btn-success"> <span>+</span> Crear correo </button> <br/> 
+
+	<br/><br/> 
+
+	<h4> Listado de correos </h4> 
+
+	<!-- Inicio nav paginacion --> 
+	<br/> 
+
+	<div id="nav_paginacion" style="display: none"> 
+		<div class="row"> 
+			<div class="col-md-1"> 
+				<button id="btn_pagina_anterior" onclick="paginaActual = paginaActual - 1; obtenerListaPrincipal()" type="button" class="btn btn-default"> 
+					<span> < </span> Anterior 
+				</button> 
+			</div> 
+			<div class="col-md-1"> 
+				<button id="btn_pagina_siguiente" onclick="paginaActual = paginaActual + 1; obtenerListaPrincipal()" type="button" class="btn btn-default"> 
+					Siguiente <span> > </span> 
+				</button> 
+			</div> 
+		</div> 
+	</div> 
+
+	<br/> 
+	<!-- Fin nav paginacion --> 
+
+	<div class="table-responsive"> <!-- Contenedor para que la tabla sea responsiva --> 
+		<table id="tablaPrincipal" class="table table-bordered"> 
+			<thead> 
+				<tr style="background-color: gray;"> 
+					<th> Id </th> 
+					<th> Asunto correo </th> 
+					<th> Email envío </th> 
+					<th style="min-width: 200px;"> Usuario </th> 
+					<th> Descripción </th> 
+					<th> Estado </th> 
+					<th> Fecha envío </th> 
+					<th style="min-width: 166px;"> </th> 
+					<!-- <th> </th> 
+					<th> </th> 
+					<th> </th>  -->
+				</tr> 
+				<tr style="background-color: lightgray;"> 
+					<th> </th> 
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="asuntoCorreo"> </label> 
+								<input onkeyup="resetearPaginacion(); obtenerListaPrincipal()" type="text" id="asuntoCorreoId" class="form-control" /> 
+							</div> 
+						</div> 
+					</th> 
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="emailOrigenEnvio"></label> 
+								<input onkeyup="resetearPaginacion(); obtenerListaPrincipal()" type="text" id="emailOrigenEnvioId" class="form-control" /> 
+							</div> 
+						</div> 
+					</th> 
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="usuario"> </label> 
+								<div> 
+									<input type="text" style="display: none; width: 100%;" class="form-control" /> 
+
+									<select id="usuarioId" onclick="inicializarSelectBuscador(event)" rutaWebApi="/Usuario/llenarSelect2" 
+									onchange="resetearPaginacion(); obtenerListaPrincipal()" entidad="Usuario" atributoBuscado="username" class="form-control"> 
+										<option value=""> -Todos- </option> 
+									</select> 
+								</div> 
+							</div> 
+						</div> 
+					</th> 
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="descripcion"></label> 
+								<input onkeyup="resetearPaginacion(); obtenerListaPrincipal()" type="text" id="descripcionId" class="form-control" /> 
+							</div> 
+						</div> 
+					</th> 
+					<th> 
+						<div class="col-md-12"> 
+							<div class="form-group"> 
+								<label class="control-label" for="estado"> </label> 
+								<select onchange="resetearPaginacion(); obtenerListaPrincipal()" id="estadoId" class="form-control" style="min-width: 99px;"> 
+									<option value=""> -Todos- </option> 
+									<option value="sin enviar"> sin enviar </option> 
+									<option value="finalizado"> finalizado </option> 
+									<option value="envio fallido"> envio fallido </option> 
+								</select> 
+							</div> 
+						</div> 
+					</th> 
+					<th> 
+						<div class="col-md-6"> 
+							<div class="form-group"> 
+								<label class="control-label" for="fechaEnvioDesde"> Desde </label> 
+								<input type="text" id="fechaEnvioDesdeId" class="form-control" />
+							</div> 
+						</div> 
+						<div class="col-md-6"> 
+							<div class="form-group"> 
+								<label class="control-label" for="fechaEnvioHasta"> Hasta </label> 
+								<input type="text" id="fechaEnvioHastaId" class="form-control" /> 
+							</div> 
+						</div> 
+					</th> 
+					<th> </th> 
+					<!-- <th> </th> 
+					<th> </th> 
+					<th> </th>  -->
+				</tr> 
+			</thead> 
+			<tbody> 
+			</tbody> 
+		</table> 
+	</div>  <!-- Fin Contenedor para que la tabla sea responsiva --> 
+</div> 
