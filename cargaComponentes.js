@@ -70,17 +70,34 @@ import {rutasProyecto} from './configuraciones/rutasProyecto.js';
         }
     }
 
-    Array.from(document.getElementsByTagName("a")).forEach(c=> 
-    {
-        c.addEventListener("click", (e) => 
-        { 
-            e.preventDefault();
-            var nombre = e.target.getAttribute("link");
+    // Array.from(document.querySelectorAll("ul li a")).forEach(c=> { console.log(c) });
 
-            if (nombre != null) {
-                mostrarComponente(nombre);
+
+    //Array.from(document.getElementsByTagName("a")).forEach(c=> 
+    Array.from(document.querySelectorAll("ul li a p")).forEach(c=>   // Detecta los <p> del navbar
+    {
+        // console.log(nombre);   // apuntesTema
+        
+        if (c.hasAttribute("link")) 
+        {
+            //console.log(c.getAttribute("link"));
+            var atributoLink = c.getAttribute("link");  // replace("#", "")
+
+            c.addEventListener("click", (e) => 
+            { 
+                e.preventDefault();
+
+                if (atributoLink != null) {
+                    mostrarComponente(atributoLink);
+                }
+            });
+
+            if (atributoLink.replace("#", "") == nombre) {
+                c.parentElement.classList.add("active");  // Marca con color el link del componente seleccionado
             }
-        });
+        }
+
+
     });
 
 })();

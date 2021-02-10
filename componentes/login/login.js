@@ -72,38 +72,29 @@ export class Login extends CargaVista
     cargarVista()
     {
         let texto = `
-        <div class="container theme-showcase" role="main">
-
-            <form method="POST" enctype="multipart/form-data" onsubmit="realizarLogin(event)">
-
-                <br/><br/>
-
-                <div class="row"> 
-                    <div class="col-md-2"> 
-                        <div class="form-group"> 
-
-                            <label class="control-label" for="username"> Usuario </label> 
-                            <input type="text" name="username" class="form-control" /> 
-
-                        </div> 
-                    </div> 
-                    <div class="col-md-2"> 
-                        <div class="form-group"> 
-
-                            <label class="control-label" for="password"> Password </label> 
-                            <input type="password" name="password" class="form-control" /> 
-
-                        </div> 
-                    </div> 
-                    <div class="col-md-12">
-                        <div class="form-group">   
-                            <button type="submit" class="btn btn-success "> Entrar </button>
-                        </div>
+        <br/><br/><br/>
+        
+        <div class="row">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title"> Inicio de sesión </h3>
+                </div>
+                <form method="POST" enctype="multipart/form-data" onsubmit="realizarLogin(event)">
+                    <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"> Usuario </label>
+                        <input type="text" name="username" class="form-control">
                     </div>
-                </div> 
-
-            </form>
-
+                    <div class="form-group">
+                        <label for="exampleInputPassword1"> Password </label>
+                        <input type="password" name="password" class="form-control">
+                    </div>
+                    </div>          
+                    <div class="card-footer">
+                    <button type="submit" class="btn btn-primary"> Entrar </button>
+                    </div>
+                </form>
+            </div>
         </div>
         `;
 
