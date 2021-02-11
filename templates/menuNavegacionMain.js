@@ -36,7 +36,7 @@ export const menuNavegacionMain = `
     </ul>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a href="#" onclick="cerrarSesion(event)" class="nav-link active"> Cerrar Sesión </a>
+            <a href="#" onclick="cerrarSesion(event)" class="nav-link btn btn-default"> Cerrar Sesión </a>
         </li>
     </ul>
 </nav>
@@ -78,7 +78,7 @@ export const menuNavegacionMain = `
                 <li class="nav-header"> OPERACIONES </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i> <p> Respaldar información </p>
+                        <i class="nav-icon fas fa-file"></i> <p link="#respaldoDatos"> Respaldar información </p>
                     </a>
                 </li>
 

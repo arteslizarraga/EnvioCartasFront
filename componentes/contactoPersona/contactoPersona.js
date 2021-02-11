@@ -1,4 +1,3 @@
-
 import { CargaVista } from "../cargaVista.js";
 import { mostrarLoadingSpinner, ocultarLoadingSpinner } from "../../funciones/funcionesGenericas.js";
 import { configuracionesProyecto } from '../../configuraciones/configuracionesProyecto.js';
@@ -140,7 +139,6 @@ export class ContactoPersona extends CargaVista
         /*
         if (ultimaFechaEnvioCorreoDesdeId != null && ! ["", null].includes(ultimaFechaEnvioCorreoDesdeId["value"])) 
             consulta["ultimaFechaEnvioCorreoDesde"] = ultimaFechaEnvioCorreoDesdeId["value"]; 
-
         if (ultimaFechaEnvioCorreoHastaId != null && ! ["", null].includes(ultimaFechaEnvioCorreoHastaId["value"])) 
             consulta["ultimaFechaEnvioCorreoHasta"] = ultimaFechaEnvioCorreoHastaId["value"]; 
         */
@@ -461,4 +459,3 @@ export class ContactoPersona extends CargaVista
     } 
     
 };
-

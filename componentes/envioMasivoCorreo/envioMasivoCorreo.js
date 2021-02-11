@@ -53,13 +53,13 @@ export class EnvioMasivoCorreo extends CargaVista
     {
         cargarDatePicker({
             querySelector: "#fechaEnvioDesdeId", 
-              placeholder: "Escriba una fecha",
+              placeholder: "Escribir fecha",
               onSelect: function () {  resetearPaginacion(); 	obtenerListaPrincipal();  },
               onClear: function () {   resetearPaginacion(); 	obtenerListaPrincipal();  }
         });
         cargarDatePicker({
             querySelector: "#fechaEnvioHastaId", 
-              placeholder: "Escriba una fecha",
+              placeholder: "Escribir fecha",
               onSelect: function () {  resetearPaginacion(); 	obtenerListaPrincipal();  },
               onClear: function () {   resetearPaginacion(); 	obtenerListaPrincipal();  }
         });
