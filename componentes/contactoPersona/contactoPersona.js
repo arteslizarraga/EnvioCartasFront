@@ -199,11 +199,14 @@ export class ContactoPersona extends CargaVista
                         fila.insertCell(2).innerHTML = (c.ultimaFechaEnvioCorreo != null) ? "si":"no"; 
 
                         fila.insertCell(3).innerHTML = (c.ultimaFechaEnvioCorreo != null) ? 
-                                c.ultimaFechaEnvioCorreo.split("-").reverse().join("-") : "";
+                            c.ultimaFechaEnvioCorreo.split("-").reverse().join("-") : "";
                         
                         fila.insertCell(4).innerHTML = c.nombreCompleto;
                         fila.insertCell(5).innerHTML = (c.haRespondido) ? "si" : "no"; 
-                        fila.insertCell(6).innerHTML = c.ultimaFechaRespuesta; 
+
+                        fila.insertCell(6).innerHTML = (c.ultimaFechaRespuesta != null) ?
+                            c.ultimaFechaRespuesta.split("-").reverse().join("-") : ""; 
+                        
                         fila.insertCell(7).innerHTML = (c.existe) ? "si" : "<button type='button' onclick='validarEmail(\"" + c.email + "\")' class='btn btn-danger'> Validar (No existe) </button>"; 
                         fila.insertCell(8).innerHTML = "<a href='' onclick='editar(event, " + c.id + ")'> Editar </a>"; 
                         fila.insertCell(9).innerHTML = "<a href='javascript:;' onclick='eliminar(" + c.id + ")'> Eliminar </a>"; 
