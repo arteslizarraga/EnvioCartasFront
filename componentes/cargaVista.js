@@ -16,12 +16,52 @@ export class CargaVista
             window["cerrarSesion"] = this.cerrarSesion;  // Asi el metodo cerrarSesion esta disponible desde el html y la consola
         }
 
-        //this.url = configuracionesProyecto.rutaWebApi;
+        this.url = configuracionesProyecto.rutaWebApi;
     }
 
-    validarSesionUsuario()
+    async validarClaveSeguridad()
     {
-        // configuracionesProyecto.nombreToken
+        if (localStorage.getItem("claveSeguridadEnvioCartas") == null)  // Validar si la clave de seguridad esta registrada en el localStorage
+        {
+            var claveSeguridad = null;
+            
+            while(claveSeguridad == null || claveSeguridad == "") 
+            {
+                claveSeguridad = prompt("Por favor ingrese la clave de seguridad");
+                
+                if (claveSeguridad != null && claveSeguridad != "")
+                {
+                    mostrarLoadingSpinner();
+
+                    await fetch(`${this.url}/validarClaveSeguridad`, { 
+                        method: "POST",
+                        body: "claveSeguridad=" + claveSeguridad,
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+                    }) 
+                    .then(response => 
+                    { 
+                        if(response.ok) { 
+                            localStorage.setItem("claveSeguridadEnvioCartas", claveSeguridad);
+                            alert("La clave de seguridad ha sido registrada"); 
+                        } 
+                        else { 
+                            claveSeguridad = null;
+                            //localStorage.removeItem("claveSeguridadEnvioCartas");
+                            alert("La clave de seguridad no es valida"); 
+                        } 
+                    })
+                    .finally(c=> {
+                        ocultarLoadingSpinner();
+                    });
+                }
+            }
+        }
+    }
+
+    async validarSesionUsuario()
+    {
+        this.validarClaveSeguridad();  // Agregado
+
         if ([null, "null", ""].includes(localStorage.getItem(configuracionesProyecto.nombreToken))) 
         { 
             window.location.href = "#login";

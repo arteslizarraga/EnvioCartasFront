@@ -15,6 +15,7 @@ export class Login extends CargaVista
         for (var prop in this) { window[prop] = this[prop]; }                                          // Coloca los atributos de la clase para que esten disponibles desde el html
         Object.getOwnPropertyNames(this.constructor.prototype).forEach(c=> { window[c] = this[c]; });  // Coloca los metodos de la clase para que esten disponibles desde el html
 
+        this.validarClaveSeguridad();  // Agregado, ya que el validarSesionUsuario lo tiene como false
         mostrarLoadingSpinner();
         this.cargarVista();
     }
@@ -39,7 +40,11 @@ export class Login extends CargaVista
         fetch(url + "/login", {
             method: "POST",
             headers: {"Accept": "application/json", "Content-Type": "application/json"},
-            body: JSON.stringify({"username": username, "password": password})
+            body: JSON.stringify({
+                "username": username, 
+                "password": password,
+                "claveSeguridad": localStorage.getItem("claveSeguridadEnvioCartas")
+            })
         })
         .then(response => 
         {

@@ -74,14 +74,14 @@ export const menuNavegacionMain = `
                         <i class="nav-icon fas fa-book"></i> <p link="#maestroEnvioEmail"> Configuración de email </p>
                     </a>
                 </li>
-
+                <!--
                 <li class="nav-header"> OPERACIONES </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-file"></i> <p link="#respaldoDatos"> Respaldar información </p>
                     </a>
                 </li>
-
+                -->
             </ul>
         </nav>
     
